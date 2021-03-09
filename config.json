@@ -20,5 +20,5 @@
     }
   ],
   "LogFile": "/var/log/prometheus_cmd_metrics.log",
-  "Listen": ":8888"
+  "Listen": ":8811"
 }
