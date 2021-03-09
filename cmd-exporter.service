@@ -1,0 +1,24 @@
+[Unit]
+Description=Prometheus Cmd Exporter
+
+[Service]
+Type=simple
+User=root
+Group=root
+TimeoutStartSec=10
+ExecStart=/usr/sbin/cmd-exporter/cmd-exporter
+
+SyslogIdentifier=cmd-exporter
+Restart=always
+
+PrivateTmp=yes
+ProtectHome=yes
+NoNewPrivileges=yes
+
+ProtectSystem=strict
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=yes
+
+[Install]
+WantedBy=multi-user.target
