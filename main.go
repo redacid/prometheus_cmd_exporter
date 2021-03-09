@@ -42,7 +42,8 @@ func readConfig() {
 	err = decoder.Decode(&config)
 	defer conffile.Close()
 
-	fmt.Printf("Logfile filename %v\n", config.LogFile)
+	fmt.Printf("Logfile filename: %v\n", config.LogFile)
+	fmt.Printf("Listen: %v\n", config.Listen)
 
 	if err != nil {
 		fmt.Printf("Error read configuration file %v\n", err)
@@ -52,7 +53,7 @@ func readConfig() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<html><body>Redacid's cmd Metrics Exporter \n <a href=/metrics>Metrics</a></body></html>")
+	fmt.Fprintf(w, "<html><body><h3>Redacid's cmd Metrics Exporter</h3> <br /> <a href=/metrics>Metrics</a></body></html>")
 }
 
 func metrics(w http.ResponseWriter, r *http.Request) {
@@ -67,8 +68,8 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		//fmt.Printf("in all caps: %q\n", out.String())
-		fmt.Printf("%v - Cmd: %v Result: %v", CCommand.Name, CCommand.Cmd, out.String())
+
+		//fmt.Printf("%v - Cmd: %v Result: %v", CCommand.Name, CCommand.Cmd, out.String())
 		fmt.Fprintln(w, "# HELP ", CCommand.Name, CCommand.Help)
 		fmt.Fprintln(w, "# TYPE ", CCommand.Name, CCommand.Type)
 		fmt.Fprintln(w, CCommand.Name, strings.Trim(out.String(), "\n"))
@@ -78,12 +79,10 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	readConfig()
-	//fmt.Printf("Logfile filename in init %v\n", config.LogFile)
 }
 
 func main() {
 
-	//fmt.Printf("Logfile filename in main %v\n", config.LogFile)
 	f, err1 := os.OpenFile(config.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err1 != nil {
 		fmt.Printf("error opening log file: %v %v\n", err1, config.LogFile)
