@@ -6,6 +6,7 @@ Type=simple
 User=root
 Group=root
 TimeoutStartSec=10
+WorkingDirectory=/usr/sbin/cmd-exporter/
 ExecStart=/usr/sbin/cmd-exporter/cmd-exporter
 
 SyslogIdentifier=cmd-exporter
