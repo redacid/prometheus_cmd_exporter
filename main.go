@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 type Config struct {
@@ -51,13 +52,10 @@ func readConfig() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Fprintln(w, "Redacid's cmd Metrics Exporter %v\n", config.LogFile)
-	fmt.Fprintf(w, "Redacid's cmd Metrics Exporter \n <a href=/metrics>Metrics</a>")
+	fmt.Fprintf(w, "<html><body>Redacid's cmd Metrics Exporter \n <a href=/metrics>Metrics</a></body></html>")
 }
 
 func metrics(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "# This is METRICS")
-	fmt.Fprintln(w, "# Redacid's cmd Metrics Exporter ", config.LogFile)
 
 	for _, CCommand := range config.Commands {
 
@@ -73,7 +71,7 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%v - Cmd: %v Result: %v", CCommand.Name, CCommand.Cmd, out.String())
 		fmt.Fprintln(w, "# HELP ", CCommand.Name, " ", CCommand.Help)
 		fmt.Fprintln(w, "# TYPE ", CCommand.Name, " ", CCommand.Type)
-		fmt.Fprintln(w, CCommand.Name, " ", out.String())
+		fmt.Fprintln(w, CCommand.Name, " ", strings.Trim(out.String(), "\n"))
 	}
 
 }
@@ -85,7 +83,7 @@ func init() {
 
 func main() {
 
-	fmt.Printf("Logfile filename in main %v\n", config.LogFile)
+	//fmt.Printf("Logfile filename in main %v\n", config.LogFile)
 	f, err1 := os.OpenFile(config.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err1 != nil {
 		fmt.Printf("error opening log file: %v %v\n", err1, config.LogFile)
