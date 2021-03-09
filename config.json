@@ -1,0 +1,13 @@
+{
+  "Commands": [
+    {
+      "Name": "red_processes_count",
+      "Cmd": "echo 1"
+    },
+    {
+      "Name": "red_processes_count2",
+      "Cmd": "echo 10"
+    }
+  ],
+  "logFile": "/var/log/prometheus_cmd_metrics.log"
+}
