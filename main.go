@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
@@ -17,10 +19,13 @@ type Config struct {
 type Command struct {
 	Name string `json:"Name"`
 	Cmd  string `json:"Cmd"`
+	Help string `json:"Help"`
+	Type string `json:"Type"`
 }
 
 type Global struct {
-	LogFile string `json:"logFile"`
+	LogFile string `json:"LogFile"`
+	Listen  string `json:"Listen"`
 }
 
 var config Config
@@ -52,10 +57,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func metrics(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "# This is METRICS")
-	fmt.Fprintln(w, "# Redacid's cmd Metrics Exporter %v", config.LogFile)
+	fmt.Fprintln(w, "# Redacid's cmd Metrics Exporter ", config.LogFile)
 
 	for _, CCommand := range config.Commands {
-		fmt.Fprintln(w, CCommand.Name, " ", "Cmd: ", CCommand.Cmd)
+
+		cmd := exec.Command("bash", "-c", CCommand.Cmd)
+		//cmd.Stdin = strings.NewReader("some input")
+		var out bytes.Buffer
+		cmd.Stdout = &out
+		err := cmd.Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+		//fmt.Printf("in all caps: %q\n", out.String())
+		fmt.Printf("%v - Cmd: %v Result: %v", CCommand.Name, CCommand.Cmd, out.String())
+		fmt.Fprintln(w, "# HELP ", CCommand.Name, " ", CCommand.Help)
+		fmt.Fprintln(w, "# TYPE ", CCommand.Name, " ", CCommand.Type)
+		fmt.Fprintln(w, CCommand.Name, " ", out.String())
 	}
 
 }
@@ -78,5 +96,5 @@ func main() {
 
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/metrics/", metrics)
-	log.Fatal(http.ListenAndServe(":8888", nil))
+	log.Fatal(http.ListenAndServe(config.Listen, nil))
 }

@@ -2,12 +2,23 @@
   "Commands": [
     {
       "Name": "red_processes_count",
-      "Cmd": "echo 1"
+      "Cmd": "ps -ax | wc -l",
+      "Help": "Number of processes",
+      "Type": "counter"
     },
     {
-      "Name": "red_processes_count2",
-      "Cmd": "echo 10"
+      "Name": "red_sdb_space_free",
+      "Cmd": "df | grep \"sdb\" | awk '{printf(\"%s\\n\",$4)}'",
+      "Help": "Free space on sdb",
+      "Type": "counter"
+    },
+    {
+      "Name": "red_sdb_space_used",
+      "Cmd": "df | grep \"sdb\" | awk '{printf(\"%s\\n\",$3)}'",
+      "Help": "Used space on sdb",
+      "Type": "counter"
     }
   ],
-  "logFile": "/var/log/prometheus_cmd_metrics.log"
+  "LogFile": "/var/log/prometheus_cmd_metrics.log",
+  "Listen": ":8888"
 }
