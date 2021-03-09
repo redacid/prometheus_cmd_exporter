@@ -69,9 +69,9 @@ func metrics(w http.ResponseWriter, r *http.Request) {
 		}
 		//fmt.Printf("in all caps: %q\n", out.String())
 		fmt.Printf("%v - Cmd: %v Result: %v", CCommand.Name, CCommand.Cmd, out.String())
-		fmt.Fprintln(w, "# HELP ", CCommand.Name, " ", CCommand.Help)
-		fmt.Fprintln(w, "# TYPE ", CCommand.Name, " ", CCommand.Type)
-		fmt.Fprintln(w, CCommand.Name, " ", strings.Trim(out.String(), "\n"))
+		fmt.Fprintln(w, "# HELP ", CCommand.Name, CCommand.Help)
+		fmt.Fprintln(w, "# TYPE ", CCommand.Name, CCommand.Type)
+		fmt.Fprintln(w, CCommand.Name, strings.Trim(out.String(), "\n"))
 	}
 
 }
