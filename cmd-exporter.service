@@ -8,18 +8,8 @@ Group=root
 TimeoutStartSec=10
 WorkingDirectory=/usr/sbin/cmd-exporter/
 ExecStart=/usr/sbin/cmd-exporter/cmd-exporter
-
 SyslogIdentifier=cmd-exporter
 Restart=always
-
-#PrivateTmp=yes
-#ProtectHome=yes
-#NoNewPrivileges=yes
-
-#ProtectSystem=strict
-#ProtectControlGroups=true
-#ProtectKernelModules=true
-#ProtectKernelTunables=yes
 
 [Install]
 WantedBy=multi-user.target

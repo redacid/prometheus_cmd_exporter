@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus Cmd Exporter
+Documentation=https://github.com/redacid/prometheus_cmd_exporter
+
+[Service]
+Restart=always
+User=root
+ExecStart=/usr/bin/cmd-exporter/prometheus-cmd-exporter $ARGS
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target

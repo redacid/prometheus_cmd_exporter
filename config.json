@@ -5,18 +5,6 @@
       "Cmd": "ps -ax | wc -l",
       "Help": "Number of processes",
       "Type": "counter"
-    },
-    {
-      "Name": "red_sdb_space_free",
-      "Cmd": "df | grep \"sdb\" | awk '{printf(\"%s\\n\",$4)}'",
-      "Help": "Free space on sdb",
-      "Type": "counter"
-    },
-    {
-      "Name": "red_sdb_space_used",
-      "Cmd": "df | grep \"sdb\" | awk '{printf(\"%s\\n\",$3)}'",
-      "Help": "Used space on sdb",
-      "Type": "counter"
     }
   ],
   "LogFile": "/var/log/prometheus_cmd_metrics.log",
