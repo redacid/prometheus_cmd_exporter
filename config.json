@@ -4,7 +4,7 @@
       "Name": "red_processes_count",
       "Cmd": "ps -ax | wc -l",
       "Help": "Number of processes",
-      "Type": "counter"
+      "Type": "gauge"
     }
   ],
   "LogFile": "/var/log/prometheus_cmd_metrics.log",
