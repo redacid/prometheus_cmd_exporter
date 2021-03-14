@@ -26,7 +26,7 @@ deploy:
 #        ssh $sshOpts root@"$TargetServer" "systemctl stop prometheus-cmd-exporter || true"
 #        ssh $sshOpts root@"$TargetServer" "mkdir -p /usr/bin/cmd-exporter || true"
 #        scp $sshOpts ./cmd_exporter root@"$TargetServer":/usr/bin/cmd-exporter/prometheus-cmd-exporter
-#        scp $sshOpts ./cicd-files/prometheus-cmd-exporter.service root@"$TargetServer":/lib/systemd/system/prometheus-cmd-exporter.service
+#        scp $sshOpts ./cicd_files/prometheus-cmd-exporter.service root@"$TargetServer":/lib/systemd/system/prometheus-cmd-exporter.service
 #        ssh $sshOpts root@"$TargetServer" "systemctl daemon-reload || true"
 #        ssh $sshOpts root@"$TargetServer" "systemctl enable prometheus-cmd-exporter.service || true"
 #        ssh $sshOpts root@"$TargetServer" "systemctl start prometheus-cmd-exporter || true"
